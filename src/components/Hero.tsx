@@ -10,6 +10,8 @@ export const Hero = () => {
 
   return (
     <section ref={containerRef} className="min-h-[90vh] flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
+      <div className="absolute inset-0 grid-pattern" />
+      
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.5 }}
