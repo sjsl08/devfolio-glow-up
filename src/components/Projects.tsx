@@ -26,46 +26,79 @@ const projects = [
 ];
 
 export const Projects = () => {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
     <section id="projects" className="py-20 px-4">
       <motion.h2 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        className="text-3xl font-bold mb-12 text-center"
+        className="text-3xl font-bold mb-12 text-center glowing-text"
       >
         Featured Projects
       </motion.h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+      >
         {projects.map((project, index) => (
           <motion.div
             key={project.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.2 }}
-            className="project-card"
+            variants={item}
+            whileHover={{ y: -10, transition: { duration: 0.2 } }}
+            className="project-card group"
           >
-            <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+            <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+              {project.title}
+            </h3>
             <p className="text-gray-400 mb-4">{project.description}</p>
             <div className="flex flex-wrap gap-2 mb-4">
               {project.tech.map((tech) => (
-                <span key={tech} className="text-sm font-mono bg-input px-2 py-1 rounded">
+                <span 
+                  key={tech} 
+                  className="text-sm font-mono bg-black/50 px-2 py-1 rounded backdrop-blur-sm border border-white/10"
+                >
                   {tech}
                 </span>
               ))}
             </div>
             <div className="flex gap-4">
-              <a href={project.github} className="text-gray-400 hover:text-white">
+              <motion.a 
+                href={project.github}
+                whileHover={{ scale: 1.1 }}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
                 <Github className="w-5 h-5" />
-              </a>
-              <a href={project.live} className="text-gray-400 hover:text-white">
+              </motion.a>
+              <motion.a 
+                href={project.live}
+                whileHover={{ scale: 1.1 }}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
                 <ExternalLink className="w-5 h-5" />
-              </a>
+              </motion.a>
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };
